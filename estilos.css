@@ -1,0 +1,246 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+    background: #c00;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+
+form {
+    background: #e0e0e0;
+    border: 4px solid #000;
+    border-radius: 15px;
+    padding: 1rem;
+    max-width: 900px;
+    width: 100%;
+    box-shadow: 0 8px #000;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+h1 {
+    text-align: center;
+    background: #fff;
+    color: #c00;
+    padding: 0.7rem;
+    border: 4px solid #000;
+    border-radius: 10px;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+}
+
+form label {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+#nombre {
+    width: 60%;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    border: 2px solid #000;
+    border-radius: 5px;
+    margin: 0.3rem 0;
+}
+
+#botonBuscar {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
+#botonBuscar:hover {
+    background: #333;
+}
+
+.info-contenedor {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.info-izquierda {
+    flex: 1 1 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-izquierda img {
+    max-width: 220px;
+    width: 100%;
+    height: auto;
+    border: 3px solid #000;
+    border-radius: 10px;
+    background: #fff;
+}
+
+#tipo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    justify-content: center;
+}
+
+#tipo li {
+    background: #fff;
+    border: 2px solid #000;
+    border-radius: 5px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.info-derecha {
+    flex: 1 1 350px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1rem;
+}
+
+.info-derecha h3 {
+    grid-column: 1 / -1;
+    background: #000;
+    color: #fff;
+    padding: 0.3rem;
+    font-size: 0.9rem;
+    border-radius: 5px;
+}
+
+.info-derecha p {
+    font-size: 0.85rem;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+#estadisticas li {
+    background: #fff;
+    border: 2px solid #000;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 0.2rem;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.8rem;
+}
+
+#listaHabilidades {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    justify-content: flex-start;
+}
+
+#listaHabilidades li {
+    background: #fff;
+    border: 2px solid #000;
+    border-radius: 5px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+}
+
+hr {
+    border: none;
+    border-top: 2px dashed #000;
+    margin: 1rem 0;
+}
+
+.media-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: center;
+}
+
+.media-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.media-left img {
+    max-width: 180px;
+    width: 100%;
+    border: 2px solid #000;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.media-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.media-right audio {
+    width: 100%;
+    max-width: 250px;
+}
+
+.datos {
+    background: #e0e0e0;
+    border: 4px solid #000;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.85rem;
+    box-shadow: 0 5px #000;
+    margin-top: 1rem;
+}
+
+.datos p {
+    margin: 0.3rem 0;
+}
+
+@media (max-width: 700px) {
+    form {
+        padding: 0.8rem;
+    }
+
+    h1 {
+        font-size: 1.1rem;
+    }
+
+    #nombre {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    #botonBuscar {
+        width: 100%;
+        margin: 0;
+        margin-top: 0.3rem;
+    }
+
+    .info-derecha {
+        grid-template-columns: 1fr;
+    }
+
+    .media-section {
+        grid-template-columns: 1fr;
+    }
+
+    .datos {
+        font-size: 0.75rem;
+        padding: 0.8rem;
+    }
+}

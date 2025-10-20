@@ -23,94 +23,107 @@ const traduccionStats = {
 };
 
 async function buscarPokemon(){
-    const respuesta = await fetch("https://pokeapi.co/api/v2/pokemon/" + inputNombre.value);
-    const infoPokemon = await respuesta.json();
+    const nombrePokemon = inputNombre.value.trim().toLowerCase();
 
-    //Datos basicos
-    nombre.innerText = infoPokemon.name.charAt(0).toUpperCase() + infoPokemon.name.slice(1);
-    id.innerText = infoPokemon.id;
-    altura.innerText = (infoPokemon.height / 10) + " m";
-    peso.innerText = (infoPokemon.weight / 10) + " kg";
+    if (!nombrePokemon) {
+        alert("Por favor ingresa un nombre o ID de Pokémon.");
+        return;
+    }
 
-    // Obtener detalles adicionales (species)
-    const respuestaSpecies = await fetch(infoPokemon.species.url);
-    const dataSpecies = await respuestaSpecies.json();
+    try {
+        const respuesta = await fetch("https://pokeapi.co/api/v2/pokemon/" + inputNombre.value);
+        if (!respuesta.ok) throw new Error("Pokémon no encontrado");
+        const infoPokemon = await respuesta.json();
 
-    // Buscar una descripción en español
-    let textoDescripcion = "Descripción no disponible.";
+        //Datos basicos
+        nombre.innerText = infoPokemon.name.charAt(0).toUpperCase() + infoPokemon.name.slice(1);
+        id.innerText = infoPokemon.id;
+        altura.innerText = (infoPokemon.height / 10) + " m";
+        peso.innerText = (infoPokemon.weight / 10) + " kg";
 
-    for (let i = 0; i < dataSpecies.flavor_text_entries.length; i++) {
-        const entrada = dataSpecies.flavor_text_entries[i];
-        if (entrada.language.name === "es") {
-            textoDescripcion = entrada.flavor_text.replace(/\n|\f/g, " ");
-            break;
+        // Obtener detalles adicionales (species)
+        const respuestaSpecies = await fetch(infoPokemon.species.url);
+        const dataSpecies = await respuestaSpecies.json();
+
+        // Buscar una descripción en español
+        let textoDescripcion = "Descripción no disponible.";
+
+        for (let i = 0; i < dataSpecies.flavor_text_entries.length; i++) {
+            const entrada = dataSpecies.flavor_text_entries[i];
+            if (entrada.language.name === "es") {
+                textoDescripcion = entrada.flavor_text.replace(/\n|\f/g, " ");
+                break;
+            }
         }
-    }
 
-    // Mostrar descripción
-    descripcion.innerText = textoDescripcion;
+        // Mostrar descripción
+        descripcion.innerText = textoDescripcion;
 
-    // Mostrar hábitat
-    if (!dataSpecies.habitat) {
-        habitat.innerText = "Desconocido";
-    } else if (dataSpecies.habitat.name === "rare") {
-        habitat.innerText = "Raro";
-    } else {
-        habitat.innerText = dataSpecies.habitat.name;
-    }
+        // Mostrar hábitat
+        if (!dataSpecies.habitat) {
+            habitat.innerText = "Desconocido";
+        } else if (dataSpecies.habitat.name === "rare") {
+            habitat.innerText = "Raro";
+        } else {
+            habitat.innerText = dataSpecies.habitat.name;
+        }
 
-    //mostrar tipos
-    tipo.innerHTML = "";
-    infoPokemon.types.forEach(t => {
-        const item = document.createElement("li");
-        item.innerText = t.type.name;
-        tipo.appendChild(item);
-    })
+        //mostrar tipos
+        tipo.innerHTML = "";
+        infoPokemon.types.forEach(t => {
+            const item = document.createElement("li");
+            item.innerText = t.type.name;
+            tipo.appendChild(item);
+        })
 
-    //mostrar estadisticas base
-    estadisticas.innerHTML = "";
-    infoPokemon.stats.forEach(est => {
+        //mostrar estadisticas base
+        estadisticas.innerHTML = "";
+        infoPokemon.stats.forEach(est => {
+            const li = document.createElement("li");
+            const nombreStat = traduccionStats[est.stat.name] || est.stat.name;
+            li.innerText = `${nombreStat}: ${est.base_stat}`;
+                estadisticas.appendChild(li);
+        });
+        
+        // HABILIDADES (en español con descripción)
+        listaHabilidades.innerHTML = "";
+        for (let hab of infoPokemon.abilities) {
+        const respuesta = await fetch(hab.ability.url);
+        const datos = await respuesta.json();
+
+        let nombreES = "Nombre no disponible";
+        let descripcionES = "Sin descripción disponible.";
+
+        for (let n of datos.names) {
+            if (n.language.name === "es") {
+                nombreES = n.name;
+                break;
+            }
+        }
+
+        for (let f of datos.flavor_text_entries) {
+            if (f.language.name === "es") {
+                descripcionES = f.flavor_text.replace(/\n|\f/g, " ");
+                break;
+            }
+        }
+
         const li = document.createElement("li");
-        const nombreStat = traduccionStats[est.stat.name] || est.stat.name;
-        li.innerText = `${nombreStat}: ${est.base_stat}`;
-            estadisticas.appendChild(li);
-    });
-    
-    // HABILIDADES (en español con descripción)
-    listaHabilidades.innerHTML = "";
-    for (let hab of infoPokemon.abilities) {
-    const respuesta = await fetch(hab.ability.url);
-    const datos = await respuesta.json();
-
-    let nombreES = "Nombre no disponible";
-    let descripcionES = "Sin descripción disponible.";
-
-    for (let n of datos.names) {
-        if (n.language.name === "es") {
-            nombreES = n.name;
-            break;
+        li.innerHTML = `<strong>${nombreES}</strong>: ${descripcionES}`;
+        listaHabilidades.appendChild(li);
         }
+
+        //imagenes
+        imagen.src = infoPokemon.sprites.other['official-artwork'].front_default;
+        spriteFrontal.src = infoPokemon.sprites.front_default;
+        spriteTrasero.src = infoPokemon.sprites.back_default;
+
+        //sonido
+        sonido.src = infoPokemon.cries.latest;
+
+    } catch (error) {
+        alert(error.message || "Ocurrió un error al buscar el Pokémon.");
     }
-
-    for (let f of datos.flavor_text_entries) {
-        if (f.language.name === "es") {
-            descripcionES = f.flavor_text.replace(/\n|\f/g, " ");
-            break;
-        }
-    }
-
-    const li = document.createElement("li");
-    li.innerHTML = `<strong>${nombreES}</strong>: ${descripcionES}`;
-    listaHabilidades.appendChild(li);
-    }
-
-    //imagenes
-    imagen.src = infoPokemon.sprites.other['official-artwork'].front_default;
-    spriteFrontal.src = infoPokemon.sprites.front_default;
-    spriteTrasero.src = infoPokemon.sprites.back_default;
-
-    //sonido
-    sonido.src = infoPokemon.cries.latest;
 }
 
 botonBuscar.addEventListener("click", e =>{

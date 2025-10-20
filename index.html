@@ -4,36 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="icon" href="pokeball.png" type="image/png">
+    <audio src="centropokemon.mp3" autoplay loop></audio>
 </head>
 <body>
-    <h1>Pokedex</h1>
-    <form action="">
-        <label for="nombre">Pokemon: </label>
-        <input type="text" name="nombre" id="nombre">
-        <br><br>
-        <button id="botonBuscar">Buscar</button>
-        <h3>Información</h3>
-        <p><strong>Nombre: </strong><span id="nombreP"></span></p>
-        <p><strong>Número de pokedex: </strong><span id="id"></span></p>
-        <p><strong>Descripción:</strong> <span id="descripcion"></span></p>
-        <p><strong>Hábitat:</strong> <span id="habitat"></span></p>
-        <p><strong>Altura: </strong><span id="altura"></span></p>
-        <p><strong>Peso: </strong><span id="peso"></span></p>
-        <p><strong>Tipo:</strong></p>
-        <ul id="tipo"></ul>
-        <p><strong>Estadisticas base:</strong></p>
-        <ul id="estadisticas"></ul>
-        <p><strong>Habilidades:</strong></p>
-        <ul id="listaHabilidades"></ul>
-        <p><strong>Imagen:</strong></p>
-        <img id="imagen" src="" alt="">
-        <p><strong>Sprite frontal:</strong></p>
-        <img id="spritef" src="" alt="">
-        <p><strong>Sprite trasero:</strong></p>
-        <img id="spritet" src="" alt="">
-        <p><strong>Sonido:</strong></p>
-        <audio id="sonido" src="" controls></audio>
-    </form>
+    <h1>Pokédex</h1>
+<form>
+  <label for="nombre">Pokémon: </label>
+  <input type="text" id="nombre" placeholder="Ej. pikachu">
+  <button id="botonBuscar">Buscar</button>
+
+  <div class="info-contenedor">
+    <div class="info-izquierda">
+      <img id="imagen" src="" alt="Imagen del Pokémon">
+      <ul id="tipo"></ul>
+    </div>
+
+    <div class="info-derecha">
+      <h3>Información general</h3>
+      <p><strong>Nombre:</strong> <span id="nombreP"></span></p>
+      <p><strong>Número:</strong> <span id="id"></span></p>
+      <p><strong>Altura:</strong> <span id="altura"></span></p>
+      <p><strong>Peso:</strong> <span id="peso"></span></p>
+      <p><strong>Hábitat:</strong> <span id="habitat"></span></p>
+      <p><strong>Descripción:</strong> <span id="descripcion"></span></p>
+
+      <h3>Estadísticas base</h3>
+      <ul id="estadisticas"></ul>
+
+      <h3>Habilidades</h3>
+      <ul id="listaHabilidades"></ul>
+    </div>
+  </div>
+
+  <hr>
+
+  <h3>Imágenes y sonidos</h3>
+<div class="media-section">
+  <div class="media-left">
+    <p><strong>Sprite frontal:</strong></p>
+    <img id="spritef" src="" alt="Sprite frontal">
+
+    <p><strong>Sprite trasero:</strong></p>
+    <img id="spritet" src="" alt="Sprite trasero">
+  </div>
+
+  <div class="media-right">
+    <p><strong>Sonido:</strong></p>
+    <audio id="sonido" controls></audio>
+  </div>
+</div>
+  <hr>
+  <div class="datos">
+    <p><strong>Desarrollado por:</strong> Alejandro Santiago Coronado</p>
+    <span><strong>Matricula:</strong> 2065785</span>&nbsp;&nbsp;<span><strong>Grupo:</strong> 52</span>
+    <p><strong>Evidencia 2:</strong> Práctica 3 "Uso de API para una aplicación"</p>
+    <p><strong>U.A:</strong> Fundamentos de desarrollo web</p>
+  </div>
+</form>
     <script src="app.js"></script>
 </body>
 </html>
