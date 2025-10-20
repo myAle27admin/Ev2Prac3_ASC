@@ -45,7 +45,7 @@ async function buscarPokemon(){
         const respuestaSpecies = await fetch(infoPokemon.species.url);
         const dataSpecies = await respuestaSpecies.json();
 
-        // Buscar una descripción en español
+        // Buscar una descripción en español y mostrarla
         let textoDescripcion = "Descripción no disponible.";
 
         for (let i = 0; i < dataSpecies.flavor_text_entries.length; i++) {
@@ -55,11 +55,9 @@ async function buscarPokemon(){
                 break;
             }
         }
-
-        // Mostrar descripción
         descripcion.innerText = textoDescripcion;
 
-        // Mostrar hábitat
+        // mostrar hábitat
         if (!dataSpecies.habitat) {
             habitat.innerText = "Desconocido";
         } else if (dataSpecies.habitat.name === "rare") {
@@ -76,16 +74,16 @@ async function buscarPokemon(){
             tipo.appendChild(item);
         })
 
-        //mostrar estadisticas base
+        //mostrar estadisticas base en español con ayuda del diccionario traduccionStats
         estadisticas.innerHTML = "";
         infoPokemon.stats.forEach(est => {
             const li = document.createElement("li");
             const nombreStat = traduccionStats[est.stat.name] || est.stat.name;
-            li.innerText = `${nombreStat}: ${est.base_stat}`;
-                estadisticas.appendChild(li);
+            li.innerHTML = `<strong>${nombreStat}</strong>: ${est.base_stat}`;
+            estadisticas.appendChild(li);
         });
         
-        // HABILIDADES (en español con descripción)
+        // mostrar habilidades en español
         listaHabilidades.innerHTML = "";
         for (let hab of infoPokemon.abilities) {
         const respuesta = await fetch(hab.ability.url);
@@ -113,12 +111,12 @@ async function buscarPokemon(){
         listaHabilidades.appendChild(li);
         }
 
-        //imagenes
+        //mostrar imagenes
         imagen.src = infoPokemon.sprites.other['official-artwork'].front_default;
         spriteFrontal.src = infoPokemon.sprites.front_default;
         spriteTrasero.src = infoPokemon.sprites.back_default;
 
-        //sonido
+        //cargar sonido
         sonido.src = infoPokemon.cries.latest;
 
     } catch (error) {
